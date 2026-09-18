@@ -1,0 +1,6 @@
+{
+  "name": "Festival Band Pelajar - Sistem Penjurian",
+  "description": "Aplikasi penjurian festival band pelajar real-time dengan autentikasi 3 dewan juri, rekapitulasi nilai otomatis juara 1-5, best players, dan ekspor Excel.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
