@@ -30,6 +30,7 @@ import {
   exportExcelUrl,
   exportSqlDumpUrl,
   viewSchemaSqlUrl,
+  downloadXamppVhostUrl,
   saveBand,
   deleteBand,
   updateBandStatus,
@@ -1087,7 +1088,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           </div>
 
           {/* Action Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between">
               <div>
                 <div className="flex items-center gap-2 mb-2">
@@ -1113,7 +1114,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <div>
                 <div className="flex items-center gap-2 mb-2">
                   <Database className="w-5 h-5 text-emerald-600" />
-                  <h4 className="font-bold text-slate-800 text-sm">Unduh SQL Dump Data Live</h4>
+                  <h4 className="font-bold text-slate-800 text-sm">Unduh SQL Dump Live</h4>
                 </div>
                 <p className="text-xs text-slate-500">
                   Ekspor instan seluruh data peserta, konfigurasi lomba, dan nilai juri saat ini dalam format query SQL <code>INSERT INTO</code>.
@@ -1126,6 +1127,26 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               >
                 <Database className="w-3.5 h-3.5" />
                 <span>Unduh festival_band_dump.sql</span>
+              </a>
+            </div>
+
+            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <Server className="w-5 h-5 text-purple-600" />
+                  <h4 className="font-bold text-slate-800 text-sm">Config Port 80 XAMPP</h4>
+                </div>
+                <p className="text-xs text-slate-500">
+                  Unduh <code>xampp_vhost.conf</code> agar Apache XAMPP meneruskan Port 80 ke aplikasi secara otomatis tanpa ketik :3000.
+                </p>
+              </div>
+              <a
+                href={downloadXamppVhostUrl()}
+                download="xampp_vhost.conf"
+                className="mt-4 inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold bg-purple-600 hover:bg-purple-500 text-white transition"
+              >
+                <Server className="w-3.5 h-3.5" />
+                <span>Unduh xampp_vhost.conf</span>
               </a>
             </div>
 
@@ -1205,6 +1226,20 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   <li>Buka browser (Chrome/Safari) di tablet juri, ketik alamat IP server pada Port 3000 (misal: <code className="text-emerald-400">{serverInfo?.primaryUrl || 'http://192.168.1.15:3000'}</code>).</li>
                   <li>Jika tablet tidak bisa mengakses, pastikan <strong>Windows Defender Firewall</strong> mengizinkan koneksi Inbound pada Port 3000.</li>
                 </ul>
+              </div>
+
+              <div className="pt-3 border-t border-slate-800">
+                <div className="text-amber-400 font-bold mb-1">5. Catatan Khusus XAMPP & Port 80:</div>
+                <div className="bg-slate-950/70 p-3 rounded-xl border border-slate-800 space-y-2 text-slate-300">
+                  <p>
+                    <strong className="text-white">PENTING:</strong> Di XAMPP, port 80 secara default dipakai oleh modul <strong>Apache</strong>. Jika Anda menyalakan Apache dan Node.js bersamaan di port 80, akan terjadi error <em>Port 80 Already in Use</em>.
+                  </p>
+                  <div className="text-slate-400 space-y-1">
+                    <p>&bull; <strong className="text-emerald-400">Cara 1 (Rekomendasi Tercepat):</strong> Di XAMPP, cukup nyalakan modul <strong>MySQL</strong> saja (klik Start MySQL). Modul Apache tidak perlu dinyalakan karena Node.js sudah menjadi web server di port 3000.</p>
+                    <p>&bull; <strong className="text-emerald-400">Cara 2 (Akses Port 80 via Apache Proxy):</strong> Jika ingin tablet juri cukup membuka alamat IP tanpa <code>:3000</code>, pasang file <code className="text-indigo-300">xampp_vhost.conf</code> ke <code className="text-indigo-300">C:\xampp\apache\conf\extra\httpd-vhosts.conf</code>. Apache akan meneruskan request port 80 ke server Node.js.</p>
+                    <p>&bull; <strong className="text-emerald-400">Cara 3 (Ganti Port di PC Lokal):</strong> Jika ingin Node.js langsung di port 80, matikan Apache di XAMPP, lalu di file <code>server.ts</code> komputer lokal Anda ganti <code>const PORT = 80;</code> (di cloud AI Studio ini port tetap 3000 agar preview online tetap aktif).</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

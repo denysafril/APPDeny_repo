@@ -126,6 +126,10 @@ export function viewSchemaSqlUrl(): string {
   return `${API_BASE}/db/schema-sql`;
 }
 
+export function downloadXamppVhostUrl(): string {
+  return `${API_BASE}/db/xampp-vhost`;
+}
+
 export interface ServerInfo {
   port: number;
   localIps: string[];

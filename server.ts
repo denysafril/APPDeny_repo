@@ -253,6 +253,18 @@ async function startServer() {
     }
   });
 
+  // XAMPP: Download Virtual Host Config (Port 80 -> Port 3000)
+  app.get('/api/db/xampp-vhost', (req, res) => {
+    const vhostPath = path.join(process.cwd(), 'xampp_vhost.conf');
+    if (fs.existsSync(vhostPath)) {
+      res.setHeader('Content-Type', 'text/plain');
+      res.setHeader('Content-Disposition', 'attachment; filename="xampp_vhost.conf"');
+      res.sendFile(vhostPath);
+    } else {
+      res.status(404).send('# Virtual host config not found');
+    }
+  });
+
   // Database: Reset to default demo data
   app.post('/api/db/reset', (req, res) => {
     db.resetToDefault();
